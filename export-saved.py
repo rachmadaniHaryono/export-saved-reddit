@@ -12,7 +12,6 @@ from time import time
 import argparse
 
 import praw
-from django.template.defaultfilters import default
 try : 
     import AccountDetails
     ACCOUNT_DETAILS_OPTION = True
