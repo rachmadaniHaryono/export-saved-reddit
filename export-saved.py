@@ -63,7 +63,7 @@ def main(args):
         reddit_username = AccountDetails.REDDIT_USERNAME
         reddit_password = AccountDetails.REDDIT_PASSWORD
     except ImportError:
-        if args.user and args.password : 
+        if args.user : 
             reddit_username = args.user
             reddit_password = getpass.getpass('Reddit password:')
         else :
