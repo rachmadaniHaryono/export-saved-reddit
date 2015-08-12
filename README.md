@@ -17,8 +17,8 @@ With git:
 Without git, [download the source code from GitHub](https://github.com/csu/export-saved-reddit/archive/master.zip), extract the archive, and follow the steps above beginning from the second line.
 
 ## Usage
-    export-saved.py [-h] [--user USER] [--password PASSWORD]
-                       csv_output html_output
+create account details (see AccountDetails.py.example) or input your user name
+    export-saved.py [-h] [--user USER] csv_output html_output
 
 positional arguments:
 
@@ -29,4 +29,3 @@ optional arguments:
 
     -h, --help           show this help message and exit
     --user USER          Reddit username.
-    --password PASSWORD  Reddit user password.
