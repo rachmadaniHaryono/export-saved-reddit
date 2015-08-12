@@ -10,13 +10,9 @@ import os
 import sys
 from time import time
 import argparse
+import getpass
 
 import praw
-try : 
-    import AccountDetails
-    ACCOUNT_DETAILS_OPTION = True
-except ImportError:
-    ACCOUNT_DETAILS_OPTION = False
 
 
 ## Converter class from https://gist.github.com/raphaa/1327761
@@ -62,26 +58,20 @@ class Converter():
 
 def main(args):
     # check arg
-    if args.user is '' :
-        if ACCOUNT_DETAILS_OPTION is True and AccountDetails.REDDIT_USERNAME is not '' :
-            reddit_username = AccountDetails.REDDIT_USERNAME
-        else : #throw error
-            print 'No username is given.'
-            sys.exit(1)
-    else : 
-        reddit_username = args.user
-        
-    if args.password is '' :
-        if ACCOUNT_DETAILS_OPTION is True and AccountDetails.REDDIT_PASSWORD is not '' :
-            reddit_password = AccountDetails.REDDIT_PASSWORD
-        else : #throw error
-            print 'No password is given.'
-            sys.exit(1)
-    else : 
-        reddit_password = args.password
-    
+    try : 
+        import AccountDetails
+        reddit_username = AccountDetails.REDDIT_USERNAME
+        reddit_password = AccountDetails.REDDIT_PASSWORD
+    except ImportError:
+        if args.user and args.password : 
+            reddit_username = args.user
+            reddit_password = getpass.getpass('Reddit password:')
+        else :
+            print 'No username and password are given.'
+            sys.exit(1)        
+
     r = praw.Reddit(user_agent='export-saved 1.1') 
-    '''last user agent contain word bot which print a warning. change into "export-saved"'''
+    #last user agent contain word bot which print a warning. change into "export-saved
     r.login(reddit_username, reddit_password)
     export_csv = 'URL,Title,Selection,Folder\n'
     for i in r.user.get_saved(limit=None, time='all'):
@@ -96,8 +86,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Exports saved Reddit posts into a HTML file that is ready to be imported into Google Chrome.')
-    parser.add_argument('--user', default='',help='Reddit username.')
-    parser.add_argument('--password', default='',help='Reddit user password.')
+    parser.add_argument('--user', help='Reddit username.')
     parser.add_argument('csv_output',default="export-saved.csv",help='path to csv file.')
     parser.add_argument('html_output',default='chrome-bookmarks.html',help='path to html bookmark file.')
     args = parser.parse_args()
