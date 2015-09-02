@@ -29,3 +29,6 @@ optional arguments:
 
     -h, --help           show this help message and exit
     --user USER          Reddit username.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rachmadaniHaryono/export-saved-reddit/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
